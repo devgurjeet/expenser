@@ -1,3 +1,15 @@
-from django.shortcuts import render
+from rest_framework import generics
 
-# Create your views here.
+from .models import Account
+from .serializer import AccountSerializer
+
+
+class AccountListCreateView(generics.ListCreateAPIView):
+    serializer_class = AccountSerializer
+    queryset = Account.objects.all()
+
+
+class AccountRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIView):
+    lookup_field = 'id'
+    serializer_class = AccountSerializer
+    queryset = Account.objects.all()

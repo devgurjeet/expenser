@@ -1,14 +1,13 @@
 from django.db import models
 from django.utils import timezone
 
+TYPE_CHOICES = (
+            ('saving', 'Saving'),
+            ('credit', 'Credit'),
+            ('other', 'Other'),
+        )
 
 class Account(models.Model):
-    TYPE_CHOICES = (
-        ('saving', 'Saving'),
-        ('credit', 'Credit'),
-        ('other', 'Other'),
-    )
-
     name = models.CharField(max_length=100, blank=False, null=False)
     type = models.CharField(max_length=10, choices=TYPE_CHOICES, default='saving')
     create_at = models.DateField(auto_created=True, default=timezone.now)
