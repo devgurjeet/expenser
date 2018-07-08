@@ -2,15 +2,17 @@ from django.db import models
 from django.utils import timezone
 
 TYPE_CHOICES = (
-            ('saving', 'Saving'),
-            ('credit', 'Credit'),
-            ('other', 'Other'),
-        )
+    ('saving', 'Saving'),
+    ('credit', 'Credit'),
+    ('other', 'Other'),
+)
+
 
 class Account(models.Model):
     name = models.CharField(max_length=100, blank=False, null=False)
     type = models.CharField(max_length=10, choices=TYPE_CHOICES, default='saving')
     create_at = models.DateField(auto_created=True, default=timezone.now)
+    user = models.ForeignKey('auth.user', on_delete=models.CASCADE)
 
     def __str__(self):
         return self.name
@@ -44,6 +46,6 @@ class Transaction(models.Model):
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
     note = models.TextField(blank=True, null=True)
     create_at = models.DateField(auto_created=True, default=timezone.now)
-    
+
     def __str__(self):
         return f"{self.amount} - {self.category}"
